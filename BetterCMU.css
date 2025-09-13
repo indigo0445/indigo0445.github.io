@@ -1,0 +1,437 @@
+/* BetterCMU.css */
+
+/* ===== Base + Theme ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root{
+  --bg: #0f1220;
+  --panel: #171a2a;
+  --panel-2: #1e2236;
+  --text: #e8ebff;
+  --muted: #b6bfdb;
+  --accent: #6aa7ff;
+  --accent-2: #8ee3c2;
+  --danger: #ff6a7a;
+  --ring: 0 0 0 3px rgba(106,167,255,0);
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(6,10,30,.35);
+}
+
+@media (prefers-color-scheme: light){
+  :root{
+    --bg: #f5f7ff;
+    --panel: #ffffff;
+    --panel-2: #f1f4ff;
+    --text: #1b2340;
+    --muted: #4a5578;
+    --accent: #676767;
+    --accent-2: #ff0000;
+    --danger: #e5484d;
+    --shadow: 0 10px 28px rgba(19,33,77,.12);
+  }
+}
+
+*{ box-sizing:border-box }
+html,body{ height:100% }
+body{
+  margin:0;
+  font-family:'Poppins',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,"Helvetica Neue",Arial,"Noto Sans";
+  color:var(--text);
+  background: radial-gradient(2200px 3000px at 10% -10%, rgba(100,100,100,.40), transparent 40%),
+              radial-gradient(3200px 3000px at 110% 10%, rgba(255,49,49,.18), transparent 45%),
+              var(--bg);
+  line-height:1.5;
+  display:grid;
+  place-items:center;
+  padding:36px 16px;
+}
+
+/* ===== Title ===== */
+#siteHeader h1{
+  padding-top:24px;
+  margin:0 0 10px;
+  font-size:clamp(28px,3.6vw,38px);
+  letter-spacing:.3px;
+  line-height:1.15;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  text-align:center;
+}
+
+/* ===== Form Card ===== */
+#userForm{
+  width:min(720px,100%);
+  background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:clamp(18px,4vw,28px);
+  backdrop-filter:blur(6px);
+  display:grid; gap:16px;
+}
+
+.form-row{ display:grid; gap:10px }
+@media (min-width:640px){
+  .grid-2{grid-template-columns:1fr 1fr}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+}
+
+.inline{ display:grid; grid-template-columns:.8fr 1fr .8fr 1fr; gap:10px; align-items:end }
+
+label{ color:var(--muted); font-size:.95rem }
+input[type="number"], select{
+  width:100%; appearance:none; padding:12px 14px; border-radius:12px;
+  border:1px solid rgba(50,50,50,.5); background:rgba(255,255,255,.06); color:var(--text);
+  outline:none; transition: box-shadow .15s ease, border-color .15s ease, background .15s ease, transform .04s ease;
+}
+input::placeholder{ color: color-mix(in oklab, var(--muted) 60%, transparent) }
+input:focus, select:focus{ border-color: color-mix(in oklab, var(--accent) 60%, transparent); box-shadow: var(--ring) }
+input:out-of-range{ border-color:var(--danger) }
+br{ display:none }
+
+button[type="submit"]{
+  margin-top:8px; border:none; padding:12px 16px; border-radius:12px;
+  background:linear-gradient(90deg,var(--accent) 0%, color-mix(in oklab, var(--accent) 15%, var(--accent-2) 85%));
+  color:#fff; font-weight:700; letter-spacing:.2px; cursor:pointer;
+  transition: transform .06s ease, filter .15s ease, box-shadow .15s ease;
+}
+button[type="submit"]:hover{ filter:saturate(1.1) brightness(1.05) }
+button[type="submit"]:active{ transform:translateY(1px) }
+
+select{
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% - 3px),
+                       calc(100% - 12px) calc(50% + 3px);
+  background-size:6px 6px, 6px 6px;
+  background-repeat:no-repeat; padding-right:34px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{ appearance:none; margin:0 }
+input[type="number"]{ -moz-appearance:textfield }
+
+#heightFeet,#heightInches{ width:100% }
+.height-row{ display:flex; align-items:center; gap:12px }
+.form-row{ display:flex; align-items:center; margin-bottom:16px }
+.form-row>label{ flex:0 0 120px; font-weight:500 }
+
+#restart{
+  margin-top:16px; padding:10px 14px; border:none; border-radius:10px;
+  background:var(--accent,#2c6cff); color:#fff; font-weight:600; cursor:pointer;
+}
+
+/* ===== Page Structure ===== */
+body{ display:grid; justify-items:center; align-items:start; padding-top:40px }
+#result{ margin-top:0 }
+
+.page-heading, h2{
+  margin:20px 0; font-size:1.8rem; font-weight:600; color:var(--text); text-align:left;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeInUp{ from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)} }
+.fade-in{ animation:fadeInUp 1.25s ease both }
+@media (prefers-reduced-motion: reduce){ .fade-in{ animation:none } }
+@keyframes fadeInRight{ from{opacity:0; transform:translateX(8px)} to{opacity:1; transform:translateX(0)} }
+
+/* ===== Goal Buttons ===== */
+.goal-buttons{ display:flex; flex-direction:column; gap:12px; margin:16px 0 }
+@media (min-width:600px){ .goal-buttons{ flex-direction:row; justify-content:center } }
+
+.goal-buttons .goal{
+  flex:1; padding:14px 18px; border-radius:12px;
+  border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.06);
+  color:var(--text); font-weight:600; font-size:1rem; cursor:pointer;
+  transition: transform .06s ease, filter .15s ease, background .15s ease, border-color .15s ease;
+}
+.goal-buttons .goal:hover{
+  background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff; filter:brightness(1); border-color:transparent;
+}
+.goal-buttons .goal:active{ transform:translateY(1px) }
+
+/* ===== Bulk/Cut/Maintain Cards ===== */
+#result:has(#proteinRatio), #result:has(#calorieDeficit){
+  width:min(720px,100%); background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); box-shadow:var(--shadow);
+  padding:clamp(18px,4vw,28px); display:grid; justify-items:center; align-items:start; gap:14px; text-align:center;
+}
+#result:has(#proteinRatio) h2, #result:has(#calorieDeficit) h2{ margin:0 0 8px; font-size:1.6rem; font-weight:700; color:var(--text) }
+#proteinRatio,#calorieSurplus,#calorieDeficit{
+  width:100%; max-width:420px; padding:12px 14px; border-radius:12px; border:1px solid var(--muted);
+  background:rgba(255,255,255,.06); color:var(--text); text-align:center; transition: box-shadow .15s ease, border-color .15s ease, background .15s ease;
+}
+#proteinRatio:focus,#calorieSurplus:focus,#calorieDeficit:focus{ border-color: color-mix(in oklab, var(--accent) 60%, transparent); box-shadow: var(--ring) }
+
+label[for="proteinOnly"]{
+  display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:.95rem; margin:10px 0;
+}
+#proteinOnly{ display:inline-block; width:18px; height:18px; accent-color:var(--accent); margin:0; vertical-align:middle }
+
+#submit, button[type="submit"]{
+  display:block; margin:12px auto 0; min-width:180px; border:none; padding:12px 16px; border-radius:12px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff; font-weight:700; letter-spacing:.2px;
+  cursor:pointer; transition: transform .06s ease, filter .15s ease, box-shadow .15s ease;
+}
+#submit:hover, button[type="submit"]:hover{ filter:saturate(1.1) brightness(1.05) }
+#submit:active, button[type="submit"]:active{ transform:translateY(1px) }
+#restart{ display:block; margin:10px auto 0; min-width:180px }
+
+/* =========================================================
+   FOOD PAGE — Recommended Meals (fits entirely in viewport)
+   ========================================================= */
+
+/* Wrapper (fixed height inside viewport; columns scroll internally) */
+#result:has(#mealsLayout){
+  width:min(1100px,100%);
+  max-height:90vh;            /* keep the whole card inside screen */
+  overflow:hidden;            /* prevent outside scrollbars */
+  background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:clamp(18px,4vw,28px);
+}
+
+/* Two-column grid toggled by .has-selection */
+#mealsLayout{
+  display:grid; gap:14px; align-items:start; height:100%;
+  grid-template-columns:1fr;               /* default (no details open) */
+}
+#mealsLayout.has-selection{
+  grid-template-columns:1fr 320px;         /* meals grid + right sidebar */
+}
+
+/* Left column: sticky header & footer; grid scrolls */
+.meals-left{
+  display:grid; grid-template-rows:auto 1fr auto; max-height:100%; min-width:0;
+}
+.meals-title{
+  position:sticky; top:0; z-index:1; padding-bottom:6px;
+  background:linear-gradient(180deg,var(--panel),transparent);
+  text-align:center; font-weight:700; font-size:1.1rem;
+}
+#mealsBox{
+  list-style:none; padding:0; margin:6px 0 2px; width:100%;
+  display:grid; gap:12px; grid-template-columns:1fr;
+  overflow:auto; padding-right:6px;    /* inner scroll */
+}
+@media (min-width:560px){ #mealsBox{ grid-template-columns:repeat(2,1fr) } }
+@media (min-width:900px){ #mealsBox{ grid-template-columns:repeat(3,1fr) } }
+
+/* Meal card */
+.meal-card{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px; padding:14px 16px; color:var(--text);
+  box-shadow:0 6px 16px rgba(6,10,30,.22);
+  display:flex; flex-direction:column; align-items:flex-start; gap:6px;
+  text-align:left; line-height:1.35; font-size:.98rem; font-variant-numeric:tabular-nums;
+  animation:fadeInUp .5s ease both;
+  transition: transform .08s ease, filter .15s ease, background .15s ease, border-color .15s ease;
+}
+.meal-card:hover{
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+  border-color:rgba(255,255,255,.14); filter:brightness(1.03) saturate(1.03);
+  transform:translateY(-1px);
+}
+.meal-card.selected{ transform:translateX(-4px) }
+
+.meal-card .restaurant{
+  font-weight:800; font-size:1.05rem;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.meal-card .items{ color:var(--text) }
+.meal-card .macros{ font-size:.92rem; color:var(--muted) }
+.meal-card .macros .cal, .meal-card .macros .prot{ white-space:nowrap }
+
+/* Footer button sticks at bottom within left column */
+#restart{ position:sticky; bottom:0; z-index:1 }
+
+/* Right sidebar (details) — compact, scrollable, fade-in) */
+.meals-right{
+  max-height:100%; overflow:auto; min-width:0;
+  opacity:0; transform:translateX(8px); pointer-events:none;
+  background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--radius); box-shadow:var(--shadow);
+  padding:12px 14px;
+}
+#mealsLayout.has-selection .meals-right{
+  opacity:1; transform:translateX(0); pointer-events:auto; animation:fadeInRight .22s ease both;
+}
+
+/* Macro detail styles */
+.macro-card .macro-head{ margin-bottom:10px }
+.macro-card .macro-title{
+  font-weight:800; font-size:1.05rem; margin-bottom:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.macro-card .macro-sub{ font-weight:700; color:var(--text) }
+.macro-card .macro-items{ color:var(--muted); font-size:.92rem }
+.bars{ display:grid; gap:10px; margin-top:12px }
+.bar-row{ display:grid; grid-template-columns:110px 1fr minmax(44px,auto); gap:10px; align-items:center }
+.bar-label{ color:var(--muted); font-size:.95rem }
+.bar-track{ position:relative; height:12px; border-radius:999px; background:rgba(255,255,255,.06); overflow:hidden; border:1px solid rgba(255,255,255,.08) }
+.bar-fill{ height:100%; border-radius:999px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); transition:width .25s ease }
+.bar-value{ text-align:right; font-variant-numeric:tabular-nums; color:var(--text); font-size:.95rem }
+
+/* Helper hint when no selection (inside scrollable left column) */
+#mealsLayout:not(.has-selection) .meals-left::after{
+  content:"📊 Select a meal to open details";
+  display:block; margin:10px auto; padding:10px 12px;
+  border-radius:var(--radius); text-align:center; font-size:.9rem; color:var(--muted);
+  background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  border:1px solid rgba(255,255,255,.06); box-shadow:var(--shadow);
+}
+#mealsLayout.has-selection .meals-left::after{ content:""; display:none }
+
+/* ===== Small screens: collapse to one column but still fit ===== */
+@media (max-width:959px){
+  #mealsLayout.has-selection{ grid-template-columns:1fr }
+  .meals-right{ max-height:40vh }         /* compact panel below grid */
+  #result:has(#mealsLayout){ max-height:92vh }
+}
+
+/* some fixes */
+/* ==== FIT THE RECOMMENDED FOOD CARD ON ONE SCREEN ==== */
+
+/* Trim top spacing on this page */
+body:has(#mealsLayout){ padding-top: 16px; }
+#siteHeader h1:has(+ #result #mealsLayout){
+  padding-top: 12px;
+  margin-bottom: 6px;
+}
+
+/* Make the card fill the viewport BELOW the title.
+   If your title area is taller/shorter, tweak the 120px. */
+#result:has(#mealsLayout){
+  height: calc(100dvh - 120px);
+  max-height: none;               /* override previous max-height */
+  padding: 16px;                  /* slightly tighter padding */
+}
+
+/* Let grid children shrink so internal scrolling actually works */
+#mealsLayout,
+.meals-left,
+.meals-right { min-height: 0; }
+
+/* Keep the two-column layout + internal scroll behavior */
+#mealsLayout{
+  height: 100%;
+  display: grid;
+  gap: 12px;                      /* a bit tighter */
+  grid-template-columns: 1fr;     /* no details open */
+}
+#mealsLayout.has-selection{
+  grid-template-columns: 1fr 320px;
+}
+
+.meals-left{
+  display: grid;
+  grid-template-rows: auto 1fr auto;  /* header | grid | footer */
+  overflow: hidden;                   /* contain internals */
+}
+.meals-title{
+  position: sticky; top: 0; z-index: 1;
+  padding-bottom: 6px;
+  background: linear-gradient(180deg, var(--panel), transparent);
+}
+#mealsBox{
+  overflow: auto;          /* internal scrolling area */
+  padding-right: 6px;
+  gap: 10px;               /* slightly tighter grid gap */
+}
+#restart{
+  position: sticky; bottom: 0; z-index: 1;
+}
+
+/* Right panel stays within the same viewport and scrolls inside */
+.meals-right{
+  max-height: 100%;
+  overflow: auto;
+  opacity: 0; transform: translateX(8px); pointer-events: none;
+  padding: 12px 14px;
+}
+#mealsLayout.has-selection .meals-right{
+  opacity: 1; transform: translateX(0); pointer-events: auto;
+  animation: fadeInRight .22s ease both;
+}
+
+/* Helper pill lives inside the left column, not outside the card */
+#mealsLayout:not(.has-selection) .meals-left::after{
+  content: "📊 Select a meal to open details";
+  display: block;
+  margin: 10px auto 0;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border: 1px solid rgba(255,255,255,.06);
+  color: var(--muted);
+  font-size: .9rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+#mealsLayout.has-selection .meals-left::after{ content: ""; display: none; }
+
+/* Small screens: collapse the sidebar under the grid but still fit */
+@media (max-width: 959px){
+  #mealsLayout.has-selection{ grid-template-columns: 1fr; }
+  .meals-right{ max-height: 40vh; }
+  #result:has(#mealsLayout){ height: calc(100dvh - 110px); }
+}
+
+/* fix shadows */
+/* === Recommended Food page shadows only === */
+/* === Recommended Food page: softer, rounder shadows (safe + minimal) === */
+
+/* Keep the big container exactly as before (no overflow tricks) */
+#result:has(#mealsLayout),
+#result:has(#mealsBox){
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);            /* your existing token */
+  overflow: hidden;                     /* prevents layout glitches */
+  /* keep whatever padding you already had */
+}
+
+/* Meal cards: slightly rounder + softer, with a tiny buffer from edges */
+#mealsBox li,
+.meal-card{
+  border-radius: 14px;                  /* rounder corners */
+  box-shadow: 0 6px 16px rgba(6,10,30,.22);  /* softer, diffuse */
+  margin: 4px;                          /* small buffer so shadows don't look clipped */
+}
+
+/* Hover state to match the new softness (optional but tidy) */
+#mealsBox li:hover,
+.meal-card:hover{
+  box-shadow: 0 10px 20px rgba(6,10,30,.26);
+}
+
+/* fixing centering */
+/* Center the macro panel instead of right sidebar */
+#mealsLayout.has-selection {
+  grid-template-columns: 1fr;        /* collapse back to single column */
+  justify-items: center;             /* center horizontally */
+}
+
+.meals-right {
+  max-width: 500px;                  /* nice compact width */
+  width: 100%;
+  margin-top: 16px;                  /* space below the grid */
+  opacity: 0;
+  transform: translateY(10px);       /* animate up instead of sideways */
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+#mealsLayout.has-selection .meals-right {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  animation: fadeInUp .3s ease both; /* reuse your fadeInUp animation */
+}
