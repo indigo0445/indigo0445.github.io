@@ -15,6 +15,9 @@ let targetCalories;
 mainPage();
 
 function mainPage() {
+    resultBox.classList.remove('fade-in'); // reset if it was used before
+    void resultBox.offsetWidth;            // reflow to restart the animation
+    resultBox.classList.add('fade-in');
     resultBox.innerHTML = `
 
           <form id="userForm">
@@ -70,6 +73,28 @@ function mainPage() {
             <button type="submit">Submit</button>
           </form>
 `
+
+    // load values if exist
+    if (weight !== undefined) {
+        document.getElementById('weight').value = weight;
+    }
+    if (heightFeet !== undefined) {
+        document.getElementById('heightFeet').value = heightFeet;
+    }
+    if (heightInches !== undefined) {
+        document.getElementById('heightInches').value = heightInches;
+    }
+    if (age !== undefined) {
+        document.getElementById('age').value = age;
+    }
+    if (sex !== undefined) {
+        document.getElementById('sex').value = sex;
+    }
+    if (activityLevel !== undefined) {
+        document.getElementById("activityLevel").value = activityLevel;
+    }
+
+
     let form = document.getElementById('userForm');
     form.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -136,6 +161,9 @@ function caloriesPage() {
 }
 
 function bulkPage() {
+    resultBox.classList.remove('fade-in'); // reset if it was used before
+    void resultBox.offsetWidth;            // reflow to restart the animation
+    resultBox.classList.add('fade-in');
     resultBox.innerHTML = `
         <select id="calorieSurplus">
             <option value="" disabled selected>Select your calorie surplus</option>
@@ -172,6 +200,9 @@ function bulkPage() {
 }
 
 function cutPage() {
+    resultBox.classList.remove('fade-in'); // reset if it was used before
+    void resultBox.offsetWidth;            // reflow to restart the animation
+    resultBox.classList.add('fade-in');
     resultBox.innerHTML = `<select id="calorieDeficit"> <option value="" disabled selected>Select your calorie deficit</option> <option value="300">Small (≈300 kcal/day) → slow fat loss, mostly muscle preserved</option> <option value="500">Moderate (≈500 kcal/day) → steady fat loss, some muscle risk</option> <option value="750">Moderate-Large (≈750 kcal/day) → slightly fast fat loss, moderate muscle risk</option> <option value="1000">Large (≈1000 kcal/day) → fast fat loss, higher muscle loss risk</option> </select> <select id="proteinRatio"> <option value="" disabled selected>Select your protein ratio</option> <option value="0">I don't care about protein</option> <option value="0.6">0.6 g/lb → mild deficit, muscle mostly preserved</option> <option value="0.8">0.8 g/lb → standard cut, good muscle retention</option> <option value="1.0">1.0 g/lb → aggressive cut, max muscle preservation</option> </select> <button type="button" id="submit">Submit</button> <button id="restart">Go Back</button>` ;
 
     document.getElementById("restart").addEventListener("click", () => {
@@ -193,6 +224,9 @@ function cutPage() {
 }
 
 function maintainPage() {
+    resultBox.classList.remove('fade-in'); // reset if it was used before
+    void resultBox.offsetWidth;            // reflow to restart the animation
+    resultBox.classList.add('fade-in');
   resultBox.innerHTML = `
         <select id="proteinRatio">
             <option value="" disabled selected>Select your protein ratio</option>
@@ -223,6 +257,9 @@ function maintainPage() {
 }
 
 function foodPage() {
+    resultBox.classList.remove('fade-in'); // reset if it was used before
+    void resultBox.offsetWidth;            // reflow to restart the animation
+    resultBox.classList.add('fade-in');
     resultBox.innerHTML = `
         <p id='timeP'>Here are your recommended meals for </p>
         <button id="restart">Go Back</button>
@@ -237,6 +274,10 @@ function foodPage() {
 }
 
 function showMeals(macros, meals) {
+    resultBox.classList.remove('fade-in'); // reset if it was used before
+    void resultBox.offsetWidth;            // reflow to restart the animation
+    resultBox.classList.add('fade-in');
+
    // Shell with left grid and an empty right panel (outside the 9-card grid)
    resultBox.innerHTML = `
      <div id="mealsLayout">
@@ -450,7 +491,7 @@ function getMeals2Items(macros, period) {
                 let jProtein = findValue(loc_macros, j, "protein");
 
                 let score = 2 * (iProtein + jProtein) - Math.abs(iCalories + jCalories - lambda * targetCalories);
-                if (!Number.isNaN(score) && (iProtein + jProtein) >= lambda * (proteinRatio - 0.2) * weight && (iProtein + jProtein) <= lambda * (proteinRatio + 0.2) * weight) {
+                if (!Number.isNaN(score) && ((proteinRatio === 0) || (iProtein + jProtein) >= lambda * (proteinRatio - 0.2) * weight && (iProtein + jProtein) <= lambda * (proteinRatio + 0.2) * weight)) {
                     meals.push([score, key, i, j]);
                 }
             }
@@ -458,7 +499,6 @@ function getMeals2Items(macros, period) {
     }
 
     meals.sort((a, b) => b[0] - a[0]);
-    console.log(meals);
     return meals;
 }
 
